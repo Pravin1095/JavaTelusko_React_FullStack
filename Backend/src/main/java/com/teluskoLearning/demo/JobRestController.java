@@ -29,5 +29,13 @@ public class JobRestController {
     public List<JobPost> getAllJobs(){
        return service.getAllJobs();
    }
+
+
+   //@PathVariable rreceives the pathVariable that we pass in request url
+
+   @GetMapping("jobPosts/{postId}")
+   public JobPost getJob(@PathVariable("postId") int postId){
+        return service.getJob(postId);
+   }
 }
 
