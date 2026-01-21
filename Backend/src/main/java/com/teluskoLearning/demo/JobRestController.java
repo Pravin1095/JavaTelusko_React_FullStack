@@ -5,10 +5,7 @@ import com.teluskoLearning.demo.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,8 +16,10 @@ import java.util.List;
 //Also if we do not want to add ResponseBody annotation each time we can give
 //@RestController at top instead of controller now it returns JSON data by default
 
+//CrossOrigin allows the request coming from the url that we pass to the annotation
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class JobRestController {
 
     @Autowired
