@@ -25,7 +25,19 @@ public class JobRestController {
     @Autowired
     JobService service;
 
-    @GetMapping("jobPosts")  //jobPosts is the request url for which get method is called
+
+    //Our Java Objects are sent as JSON to the client, this is done by a library
+    //jackson, this converts the Java objects that we return in the method to a
+    //JSON format. There is also another library jackson-xml which can convert
+    //our Java objects to XML , so if we have both libraries installed and we
+    //want only JSON to be sent we can add produces={application/json}, this
+    //ensures only json is sent to the client
+
+    //Similary there is consumes that we can have in PostMapping so that it accepts
+    //the body only the format that we mention in consumes. If we mention "application/xml"
+    //we can send body only in that format and application/json, it accepts only
+    //application/json
+    @GetMapping(path="jobPosts", produces = {"application/json"})  //jobPosts is the request url for which get method is called
     public List<JobPost> getAllJobs(){
        return service.getAllJobs();
    }
@@ -38,13 +50,13 @@ public class JobRestController {
         return service.getJob(postId);
    }
 
-   @PostMapping("jobPosts")
+   @PostMapping(path="jobPosts", consumes={"application/json"})
     public JobPost addJob(@RequestBody JobPost jobpost){
         service.addJob(jobpost);
         return service.getJob(jobpost.getPostId());
    }
 
-   @PutMapping("jobPosts")
+   @PutMapping("jobPosts" )
    public JobPost updateJob(@RequestBody JobPost jobpost){
         service.updateJob(jobpost);
         return service.getJob(jobpost.getPostId());
