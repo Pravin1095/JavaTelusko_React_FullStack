@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 @Repository
@@ -56,4 +57,33 @@ public class JobRepo {
         }
         return null;
     }
-}
+
+    public void updateJob(JobPost jobpost) {
+        for(JobPost jobpost1 : jobs){
+            if(jobpost1.getPostId()==jobpost.getPostId()){
+                jobpost1.setPostProfile(jobpost.getPostProfile());
+                jobpost1.setPostDesc(jobpost.getPostDesc());
+                jobpost1.setReqExperience(jobpost.getReqExperience());
+                jobpost1.setPostTechStack(jobpost.getPostTechStack());
+            }
+        }
+    }
+
+
+    //If we are using normal forEach for removal of elment it throws ConcurrentModification
+    //Error, which means the following definition, Java collections use a fail-fast iterator.
+    //Iterator keeps a modCount
+    //If list structure changes (add/remove) during iteration
+    //Java throws ConcurrentModificationException
+    
+    public void deleteJob(int id) {
+        Iterator<JobPost> it = jobs.iterator();
+
+        while (it.hasNext()) {
+            JobPost job = it.next();
+            if (job.getPostId() == id) {
+                it.remove();
+            }
+        }
+    }
+    }

@@ -31,11 +31,29 @@ public class JobRestController {
    }
 
 
-   //@PathVariable rreceives the pathVariable that we pass in request url
+   //@PathVariable receives the pathVariable that we pass in request url
 
    @GetMapping("jobPosts/{postId}")
    public JobPost getJob(@PathVariable("postId") int postId){
         return service.getJob(postId);
+   }
+
+   @PostMapping("jobPosts")
+    public JobPost addJob(@RequestBody JobPost jobpost){
+        service.addJob(jobpost);
+        return service.getJob(jobpost.getPostId());
+   }
+
+   @PutMapping("jobPosts")
+   public JobPost updateJob(@RequestBody JobPost jobpost){
+        service.updateJob(jobpost);
+        return service.getJob(jobpost.getPostId());
+   }
+
+   @DeleteMapping("jobPosts/{postId}")
+   public String deleteJob(@PathVariable("postId") int postId){
+        service.deleteJob(postId);
+        return "Deleted";
    }
 }
 
