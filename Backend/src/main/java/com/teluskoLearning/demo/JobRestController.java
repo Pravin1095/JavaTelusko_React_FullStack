@@ -50,6 +50,11 @@ public class JobRestController {
         return service.getJob(postId);
    }
 
+   @GetMapping("/jobPosts/keyword/{keyword}")
+   public List<JobPost> search(@PathVariable("keyword") String keyword){
+return service.search(keyword);
+   }
+
    @PostMapping(path="jobPosts", consumes={"application/json"})
     public JobPost addJob(@RequestBody JobPost jobpost){
         service.addJob(jobpost);

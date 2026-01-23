@@ -13,7 +13,10 @@ import java.util.List;
 //to store data, second is the type of field of Primary key in JobPost which is PostId
 @Repository
 public interface JobRepo extends JpaRepository<JobPost, Integer> {
+    //DSL is a powerful concept in Java that is in JpaRepository used to create method like below and access without writing any business logic
+    //It generates business logic from the name that we have provided
 
+List <JobPost> findByPostProfileContainingOrPostDescContaining(String postProfile, String postDesc);
 }
 //    // ArrayList to store JobPost objects
 //    List<JobPost> jobs = new ArrayList<>(Arrays.asList(
