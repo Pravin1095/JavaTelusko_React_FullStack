@@ -53,7 +53,7 @@ const handleChange = (e)=>{
 
       const handleDelete = (id) => {
         async function deletePost() {
-          await axios.delete(`http://localhost:8080/jobPost/${id}`);
+          await axios.delete(`http://localhost:8080/jobPosts/${id}`);
       }
       deletePost();
       window.location.reload();
