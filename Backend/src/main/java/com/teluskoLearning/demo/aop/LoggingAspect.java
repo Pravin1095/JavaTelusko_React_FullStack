@@ -1,8 +1,7 @@
 package com.teluskoLearning.demo.aop;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -21,5 +20,24 @@ public class LoggingAspect {
     @Before("execution(* com.teluskoLearning.demo.service.JobService.getJob(..))")
     public void logMethodCall(JoinPoint jp){
         LOGGER.info("Method called " + jp.getSignature().getName());
+    }
+
+    //After gets called once the method has finished executing
+    @After("execution(* com.teluskoLearning.demo.service.JobService.getJob(..))")
+    public void logMethodExecuted(JoinPoint jp){
+        LOGGER.info("Method executed " + jp.getSignature().getName());
+    }
+
+    //AfterThrowing throws an error when a method is failed with some exceptions
+    @AfterThrowing("execution(* com.teluskoLearning.demo.service.JobService.getJob(..))")
+    public void logMethodCrash(JoinPoint jp){
+        LOGGER.info("Method has some issues" + jp.getSignature().getName());
+    }
+
+    //AfterReturning executes only if method is success without an error whereas @After executes
+    //once method has executed even with an error
+    @AfterReturning("execution(* com.teluskoLearning.demo.service.JobService.getJob(..))")
+    public void logMethodExecutedSuccess(JoinPoint jp){
+        LOGGER.info("Method has executed successfully" + jp.getSignature().getName());
     }
 }
