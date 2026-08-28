@@ -1,6 +1,7 @@
 package com.teluskoLearning.demo.config;
 
 
+import com.teluskoLearning.demo.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -21,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private MyUserDetailsService userDetailsService;
 
 
     @Bean
@@ -40,9 +41,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(customizer -> customizer.disable())
-                .authorizeHttpRequests(request -> request.anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .authorizeHttpRequests(request -> request.requestMatchers("/register").permitAll().anyRequest().authenticated()).
+                sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
