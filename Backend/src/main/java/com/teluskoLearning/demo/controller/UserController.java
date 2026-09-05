@@ -1,5 +1,7 @@
 package com.teluskoLearning.demo.controller;
 
+import com.teluskoLearning.demo.service.JwtService;
+import org.apache.tomcat.Jar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +20,9 @@ public class UserController {
     AuthenticationManager authenticationManager;
 
     @Autowired
+    JwtService jwtService;
+
+    @Autowired
     private UserService service;
 
     @PostMapping("register")
@@ -29,6 +34,7 @@ public class UserController {
     public String login(@RequestBody User user){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if(authentication.isAuthenticated()){
+            jwtService.generateToken(user.getUsername());
             return "Success";
         }
         else{
