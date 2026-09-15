@@ -34,8 +34,8 @@ public class UserController {
     public String login(@RequestBody User user){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if(authentication.isAuthenticated()){
-            jwtService.generateToken(user.getUsername());
-            return "Success";
+           return jwtService.generateToken(user.getUsername()); // if you decode this token you can get username, in time and expiration time for the user
+
         }
         else{
             return "Login Failed";
